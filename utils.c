@@ -2,4 +2,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include "functions.h"
+
+/*
+
+Utility functions to simplify code in other files
+
+*/
