@@ -1,4 +1,7 @@
-#include "structs.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "utils.h"
 
 /*
 
@@ -46,3 +49,5 @@ Function for user to borrow book from library.
 Function to return book from user to library.
 
 */
+
+
