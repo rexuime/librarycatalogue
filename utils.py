@@ -2,46 +2,19 @@ from classes import *
 
 # Implement exception handling for functions
 
-# Stand-In for GUI
-def choose(options):
-
-    input = ""
-
-    if input not in options:
-        print("--------------------------")
-        print("What would you like to do?")
-        print("--------------------------")
-        print("Add Book: ab")
-        print("--------------------------")
-        print("Add Member: am")
-        print("--------------------------")
-        print("Remove Book: rb")
-        print("--------------------------")
-        print("Remove Member: rm")
-        print("--------------------------")
-        print("List Books: lb")
-        print("--------------------------")
-        print("List Members: lm")
-        print("--------------------------")
-        print("Find Book: fb")
-        print("--------------------------")
-        print("Find Member: fm")
-        print("--------------------------")
-        input = input("Enter choice: ")
-
 def addBook(list):
 
+    book = Book()
+    list.append(book)
+    #book.title = 
+    #book.author = 
     return
+
 
 def addMember(list):
 
-    book = Book()
-    book.title = input("Enter title of book: ")
-    book.author = input("Enter author of book: ")
+    return
 
-    
-
-    list.append(book)
 
 def listBooks(list):
 
@@ -55,17 +28,21 @@ def listBooks(list):
 
 def listMembers(list):
 
+    print("---------------------------------")
+    print("List of Members")
+    print("---------------------------------")
+
     for i in list:
-        print("---------------------------------")
-        print("List of Members")
-        print("---------------------------------")
         i.printMember()
         print("---------------------------------")
 
 
-#def findBook():
+# Searching algorithm used to find a book in the book list
+def findBook():
 
+    return 
 
-#d#ef findMember():
+# Searching algorithm used to find a member in the member list
+def findMember():
 
-
+    return
