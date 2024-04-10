@@ -16,8 +16,6 @@ class Book():
         self.title = ""
         self.bookId = ""
         self.available = True
-        self.next = None
-        self.prev = None
 
     def printBook(self):
 
@@ -29,6 +27,11 @@ class Book():
         else:
             print("Available: No")
 
+"""
+
+Members must have a first and last name, memberId, and bookCount to track the number of books they've borrowed.
+
+"""
     
 class Member():
 
@@ -38,8 +41,6 @@ class Member():
         self.lastName = ""
         self.memberId = ""
         self.bookCount = 0
-        self.next = None
-        self.prev = None
 
     def printMember(self):
 

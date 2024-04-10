@@ -19,6 +19,11 @@ def addMember(list):
 
 def listBooks(list):
 
+    if len(list) == 0:
+
+        print("No books")
+        return
+
     for i in list:
         print("--------------------------------")
         print("List of Books")
@@ -29,6 +34,11 @@ def listBooks(list):
 
 def listMembers(list):
 
+    if len(list) == 0:
+
+        print("No members")
+        return
+    
     print("---------------------------------")
     print("List of Members")
     print("---------------------------------")
