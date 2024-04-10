@@ -12,20 +12,28 @@ class Book():
 
     def __init__(self):
         
+        # Book info
         self.author = ""
         self.title = ""
         self.bookId = ""
         self.available = True
 
-    def printBook(self):
+    def formattedBookInfo(self):
 
-        print("Title: " + self.title)
-        print("Author: " + self.author)
-        print("Book Id: " + self.bookId)
+        # Simple string manipulation to format book info for GUI
+        string = "-------------------------------------------------------------------------------------------------------------------\n"
+        string += "Title: " + self.title + "\nAuthor: " + self.author + "\nBook ID: " + self.bookId + "\n"
+
         if self.available:
-            print("Available: Yes")
+
+            string += "Available: Yes\n"
+
         else:
-            print("Available: No")
+
+            string+= "Available: No\n"
+
+        string += "-------------------------------------------------------------------------------------------------------------------"
+        return string
 
 """
 
@@ -37,13 +45,16 @@ class Member():
 
     def __init__(self):
 
+        # Member information
         self.firstName = ""
         self.lastName = ""
         self.memberId = ""
         self.bookCount = 0
 
-    def printMember(self):
+    def formattedMemberInfo(self):
 
-        print("Name: " + self.firstName + " " + self.lastName)
-        print("Member Id: " + self.memberId)
-        print("Books Borrowed: " + str(self.bookCount))
+        # Simple string manipulation to format member info for GUI
+        string = "-------------------------------------------------------------------------------------------------------------------\n"
+        string += "Name: " + self.firstName + " " + self.lastName + "\nMember ID: " + self.memberId + "\nBooks Borrowed: " + str(self.bookCount) + "\n"
+        string += "-------------------------------------------------------------------------------------------------------------------"
+        return string

@@ -19,3 +19,8 @@ if __name__ == "__main__":
     Find member
     Exit
     """
+
+
+    # WAS WORKING ON ADDING FUNCTIONALITY
+    # NEED TO FINISH UP CONFIRM LOGIC
+    # NEED TO CLEAN UP FUNCTION PARAMETERS

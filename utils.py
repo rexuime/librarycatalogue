@@ -2,49 +2,50 @@ from classes import *
 
 # Implement exception handling for functions
 
-def addBook(list):
+def addBook(gui, title, author):
 
     book = Book()
-    list.append(book)
-    #book.title = 
-    #book.author = 
+    book.title = title
+    book.author = author
+    gui.bookList.append(book) 
     return
 
 
-def addMember(list):
+def addMember(gui, firstName, lastName):
 
-    
+    member = Member()
+    member.firstName = firstName
+    member.lastName = lastName
+    member.memberId = str()
+    gui.memberList.append(member)
     return
 
 
-def listBooks(list):
+def listBooks(gui):
 
-    if len(list) == 0:
+    list = gui.bookList
 
-        print("No books")
-        return
+    # IMPLEMENT label that says "List of Books" before loop
 
+    # IMPLEMENT scrollbar so user can see all elements in longer lists
     for i in list:
-        print("--------------------------------")
-        print("List of Books")
-        print("--------------------------------")
-        i.printBook()
-        print("--------------------------------")
-
-
-def listMembers(list):
-
-    if len(list) == 0:
-
-        print("No members")
+        
+        # IMPLEMENT label that uses "formattedBookInfo" function as text
+        # i.formattedBookInfo()
         return
+
+
+def listMembers(gui):
+
+    list = gui.memberList
     
-    print("---------------------------------")
-    print("List of Members")
-    print("---------------------------------")
+    # IMPLEMENT label that says "List of Members" before loop 
 
+    # IMPLEMENT scrollbar so user can see all elements in longer lists
     for i in list:
-        i.printMember()
+
+        # IMPLEMENT label that uses "formattedMemberInfo" function as text
+        # i.formattedMemberInfo()
         print("---------------------------------")
 
 
