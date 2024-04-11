@@ -1,0 +1,60 @@
+
+>>>Create Flowchart<<<
+
+Login/Signup (Signup only for members)
+
+Librarian:
+
+    Main Menu:
+
+        Add:
+
+            Book:
+
+                Only need to get title and author
+
+
+        Remove:
+
+            Book:
+
+            Member:
+
+
+        Find:
+
+            Book:
+
+            Member:
+
+
+        List:
+
+            Book:
+
+            Member:
+
+Member:
+
+    Sign Up:
+
+        
+    Main Menu:
+
+
+        Return:
+
+            Needs confirm/cancel feature
+
+        Find:
+
+            Needs back feature after find
+
+            Should be able to borrow books from find
+
+
+        List:
+
+            Should be able to borrow books from list
+
+

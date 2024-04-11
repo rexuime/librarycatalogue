@@ -49,6 +49,8 @@ class Member():
         self.firstName = ""
         self.lastName = ""
         self.memberId = ""
+        self.username = ""
+        self.password = ""
         self.bookCount = 0
 
     def formattedMemberInfo(self):
