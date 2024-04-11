@@ -2,22 +2,31 @@ from classes import *
 
 # Implement exception handling for functions
 
-def addBook(gui, title, author):
+def addBook(gui, author, title, numBooks):
 
     book = Book()
     book.title = title
     book.author = author
+    book.bookId = str(numBooks)
     gui.bookList.append(book) 
-    return
 
 
-def addMember(gui, firstName, lastName):
+def addMember(gui, firstName, lastName, numMembers):
 
     member = Member()
     member.firstName = firstName
     member.lastName = lastName
-    member.memberId = str()
+    member.memberId = str(numMembers)
     gui.memberList.append(member)
+
+
+def removeBook(gui):
+    
+    return
+
+
+def removeMember(gui):
+
     return
 
 
@@ -52,9 +61,17 @@ def listMembers(gui):
 # Searching algorithm used to find a book in the book list
 def findBook():
 
+    # If found, return book
+
+    # If not found, return false
+
     return 
 
 # Searching algorithm used to find a member in the member list
 def findMember():
+
+    # If found, return member
+
+    # If not found, return false
 
     return

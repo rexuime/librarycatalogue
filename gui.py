@@ -9,8 +9,6 @@ class gui:
         # List of all books and members in catalogue
         self.bookList = []
         self.memberList = []
-        self.numBooks = 0
-        self.numMember = 0
 
         # Create root object
         self.root = Tk()
@@ -26,6 +24,12 @@ class gui:
         # Start loop
         self.root.mainloop()
 
+
+    """
+    ----------------------------------------------------------------
+    MAIN MENU FUNCTION: Menu for user to select what they wish to do
+    ----------------------------------------------------------------
+    """
 
     # Function to change to main_menu
     def main_menu(self):
@@ -45,7 +49,7 @@ class gui:
 
         # Creates a button that adds a book to the catalogue when pressed
         # Will first prompt the user to fill out info about book using book_search
-        ab = Button(self.root, text="Add Book", command= lambda: self.book_fill_out(0, False), height=4, width=30)
+        ab = Button(self.root, text="Add Book", command= lambda: self.book_fill_out(0), height=4, width=30)
         ab.place(x=80, y=400)
 
         # Creates a button that adds a member to the catalogue when pressed
@@ -96,6 +100,7 @@ class gui:
         self.default_widgets()
 
         # Disable remove, search, and list buttons if list is empty
+        # Otherwise, enable them
         if len(self.bookList) == 0:
             rb.configure(state=DISABLED)
             fb.configure(state=DISABLED)
@@ -115,40 +120,52 @@ class gui:
             lm.configure(state=NORMAL)
 
 
-# For the two "fill out" functions below 
-# mode = 0 is for adding
-# mode = 1 is for removing
-# Otherwise it goes into search mode
-
+    """
+    --------------------------------------------------------------------------------------
+    BOOK FUNCTIONS: For adding, removing, searching for, and listing catalogue members
+    --------------------------------------------------------------------------------------
+    """
 
     # Function for users to add, remove, and search for books
     def book_fill_out(self, mode):
 
+        # Clear GUI and setup default widgets
         self.clear_gui()
         self.default_widgets()
 
+        # Create widgets needed for add, remove, and search
         info = Label(self.root, text="Enter Info Below", fg="white", bg="black", font=("Arial", 40))
         title = Label(self.root, text="Title", fg="white", bg="black", font=("Arial", 18), height=2, width=10)
         title_entry = Entry(self.root, width=34, borderwidth=3, font=("Arial", 14))
+        title_entry.bind('<KeyRelease>', lambda: self.book_entry_check(add_enter, title_entry, author_entry))
         author = Label(self.root, text="Author", fg="white", bg="black", font=("Arial", 18), height=2, width=10)
         author_entry = Entry(self.root, width=34, borderwidth=3, font=("Arial", 14))
-        enter = Button(self.root, text="Enter", height=3, width=20, command= lambda: self.book_add(enter, cancel))
+        author_entry.bind('<KeyRelease>', lambda: self.book_entry_check(add_enter, title_entry, author_entry))
+        add_enter = Button(self.root, text="Add", height=3, width=20, command= lambda: self.book_add(add_enter, cancel, author_entry, title_entry, info), state=DISABLED)
+        remove_enter = Button(self.root, text="Remove", height=3, width=20, command= lambda: self.book_remove(remove_enter, cancel, author_entry, title_entry, info))
+        search_enter = Button(self.root, text="Find", height=3, width=20, command= lambda: self.book_search(search_enter, cancel, author_entry, title_entry, info))
         cancel = Button(self.root, text="Cancel", height=3, width=20, state=DISABLED)
+
+        # Setup entries for add, remove, and search
+
+        # Setup
     
         # Add
         if mode == 0:
 
+            # Place widgets for add screen
             info.place(x=410, y=140)
             title.place(x=530, y=260)
             title_entry.place(x=410, y=330)
             author.place(x=530, y=410)
             author_entry.place(x=410, y=480)
-            enter.place(x=650, y=600)
+            add_enter.place(x=650, y=600)
             cancel.place(x=410, y=600)
 
         # Remove/Search
         else:
 
+            # Place widgets for remove and search screens
             info.place(x=410, y=140)
             title.place(x=530, y=180)
             title_entry.place(x=410, y=250)
@@ -157,114 +174,218 @@ class gui:
             bookid = Label(self.root, text="Book ID", fg="white", bg="black", font=("Arial", 18), height=2, width=10)
             bookid.place(x=530, y=480)
             bookid_entry = Entry(self.root, width=34, borderwidth=3, font=("Arial", 14))
+            #bookid_entry.bind('<KeyRelease>', lambda: self.book_entry_check(add_enter, title_entry, author_entry))
             bookid_entry.place(x=410, y=550)
-            enter.place(x=650, y=600)
             cancel.place(x=410, y=600)
         
+            # Remove
             if mode == 1:
 
-                self.book_remove(enter, cancel)
+                self.book_remove(remove_enter, cancel)
         
+            # Search
             else:
 
-                self.book_search(enter, cancel) 
+                self.book_search(search_enter, cancel) 
 
 
-    def book_add(self, enter, cancel):
+    # Determine whether adding or removing/searching, then go to that function
+    def book_entry_check():
 
-        if self.confirm == 0:
+        return
 
-            enter.configure(text="Enter")
-            cancel.configure(state=DISABLED)
 
-        elif self.confirm == 1:
+    # Function for add book screen
+    def book_add(self, enter, cancel, aute, tite, info):
 
-            enter.configure(text="Confirm?")
+        self.confirm += 1
+
+        if self.confirm == 1:
+
+            enter.configure(text="Confirm")
             cancel.configure(state=NORMAL)
 
         else:
 
-            return
+            self.confirm = 0
+            addBook(self, aute.get(), tite.get(), len(self.bookList))
+            self.clear_gui()
+            self.main_menu()
 
 
-    #def book_remove(self, enter, cancel):
+    # Function to check if add entries are blank or not
+    def book_add_check(self, enter, tite, aute):
 
-        #return
-    
-    #def book_search(self, enter, cancel):
+        if tite.get() == "" and aute.get() == "":
 
-        #return
-        
-        
+            enter.configure(state=DISABLED)
+
+        else:
+
+            enter.configure(state=NORMAL)
+
+
+    # NEED TO FINISH
+    # Function for remove book screen
+    def book_remove(self, enter, cancel, info):
+
+        # Place remove enter down
+        enter.place(x=650, y=600)
+
+
+    # NEED TO FINISH
+    # Function for find book screen
+    def book_search(self, enter, cancel, info):
+
+        # Place search enter down
+        enter.place(x=650, y=600)
+
+
+    # NEED TO FINISH
+    # Function to check if at least one remove or search entry is filled in
+    def book_rs_check():
+
+        return
+
+
+    def list_books(self):
+
+        listBooks(self)
+
+
+    """
+    ------------------------------------------------------------------------------------
+    MEMBER FUNCTIONS: For adding, removing, searching for, and listing catalogue members
+    ------------------------------------------------------------------------------------
+    """
+         
     # Function for users to add, remove, and search for members
     def member_fill_out(self, mode):
 
+        # Clear GUI and setup default widgets
         self.clear_gui()
         self.default_widgets()
 
+        # Create widgets for add, remove, and search
         info = Label(self.root, text="Enter Info Below", fg="white", bg="black", font=("Arial", 40))
         firstname = Label(self.root, text="First Name", fg="white", bg="black", font=("Arial", 18), height=2, width=10)
         firstname_entry = Entry(self.root, width=34, borderwidth=3, font=("Arial", 14))
         lastname = Label(self.root, text="Last Name", fg="white", bg="black", font=("Arial", 18), height=2, width=10)
         lastname_entry = Entry(self.root, width=34, borderwidth=3, font=("Arial", 14))
-        enter = Button(self.root, text="Enter", height=3, width=20, command= lambda: self.book_add(enter, cancel))
-        cancel = Button(self.root, text="Cancel", height=3, width=20, state=DISABLED)
+        memberid = Label(self.root, text="Member ID", fg="white", bg="black", font=("Arial", 18), height=2, width=10)
+        memberid_entry = Entry(self.root, width=34, borderwidth=3, font=("Arial", 14))
+        add_enter = Button(self.root, text="Add", height=3, width=20, command= lambda: self.member_add(add_enter, cancel, firstname_entry, lastname_entry, info))
+        remove_enter = Button(self.root, text="Remove", height=3, width=20, command= lambda: self.member_remove(remove_enter, cancel, firstname_entry, lastname_entry, memberid_entry, info))
+        search_enter = Button(self.root, text="Find", height=3, width=20, command= lambda: self.member_search(search_enter, cancel, firstname_entry, lastname_entry, memberid_entry, info))
+        cancel = Button(self.root, text="Cancel", height=3, width=20, state=DISABLED, command= lambda: self.cancel(None, cancel))
 
         # Add
         if mode == 0:
 
+            # Place widgets for add screen
             info.place(x=410, y=140)
             firstname.place(x=530, y=280)
             firstname_entry.place(x=410, y=350)
             lastname.place(x=530, y=430)
             lastname_entry.place(x=410, y=500)
-            enter.place(x=650, y=600)
+            add_enter.place(x=650, y=600)
             cancel.place(x=410, y=600)
+            cancel.configure(command= lambda: self.cancel(add_enter, cancel))
 
         # Remove/Search
         else:
 
+            # Place widgets for remove and search screens
             info.place(x=410, y=140)
             firstname.place(x=530, y=330)
             firstname_entry.place(x=410, y=400)
             lastname.place(x=530, y=180)
             lastname_entry.place(x=410, y=250)
-            memberid = Label(self.root, text="Member ID", fg="white", bg="black", font=("Arial", 18), height=2, width=10)
             memberid.place(x=530, y=480)
-            memberid_entry = Entry(self.root, width=34, borderwidth=3, font=("Arial", 14))
             memberid_entry.place(x=410, y=550)
-            enter.place(x=650, y=600)
             cancel.place(x=410, y=600)
 
+            # Remove
             if mode == 1:
 
-                self.member_remove(enter, cancel)
+                cancel.configure(command= lambda: self.cancel(remove_enter, cancel))
+                self.member_remove(remove_enter, cancel)
 
+            # Search
             else:
                 
-                self.member_search(enter, cancel)
-    """
-    def member_add(self, enter, cancel):
+                cancel.configure(command= lambda: self.cancel(search_enter, cancel))
+                self.member_search(search_enter, cancel)
 
-    def member_remove(self, enter, cancel):
 
-    def member_search(self, enter, cancel):
-    """
+    def member_add(self, enter, cancel, fne, lne, info):
 
-    def cancel(self):
+        self.confirm += 1
 
-        self.confirm = self.confirm - 1
-    
-    def list_books(self):
+        if self.confirm == 1:
 
-        listBooks(self)
+            enter.configure(text="Confirm")
+            cancel.configure(state=NORMAL)
+
+        else:
+
+            self.confirm = 0
+
+            addMember(self, fne.get(), lne.get(), len(self.memberList))
+            self.clear_gui()
+            self.main_menu()
+
+
+    # Function to check if add entries are blank or not
+    def member_add_check(self, enter, fne, lne):
+
+        if fne.get() == "" and lne.get() == "":
+
+            enter.configure(state=DISABLED)
+
+        else:
+
+            enter.configure(state=NORMAL)
+
+
+    # NEED TO FINISH
+    def member_remove(self, enter, cancel, fne, lne, mide, info):
+
+        enter.place(x=650, y=600)
+
+
+    # NEED TO FINISH
+    def member_search(self, enter, cancel, fne, lne, mide, info):
+
+        enter.place(x=650, y=600)
+
+
+    # NEED TO FINISH
+    # Function to check if at least one remove or search entry is filled in
+    def mmember_rs_check():
+
         return
+
     
     def list_members(self):
 
         listMembers(self)
-        return
+
     
+    """
+    ---------------------------------------------------------------------------------
+    MISC. FUNCTIONS: General functions that are used several times in functions above
+    ---------------------------------------------------------------------------------
+    """
+
+    # Function for users to change entry before confirming
+    def cancel(self, enter, cancel):
+
+        self.confirm = self.confirm - 1
+        enter.configure(text="Enter")
+        cancel.configure(state=DISABLED)
+
+
     # Function to clear the GUI of all widgets to change to a different GUI
     def clear_gui(self):
 
@@ -288,6 +409,4 @@ class gui:
         bks = Label(self.root, text="Number of Books: " + str(len(self.bookList)), height=2, width=18, fg="white", bg="black", font=("Arial", 10))
         bks.place(x=450, y=750)
         mems = Label(self.root, text="|   Number of Members: " + str(len(self.memberList)), height=2, width=18, fg="white", bg="black", font=("Arial", 10))
-        mems.place(x=590, y=750)
-
-        
+        mems.place(x=590, y=750)     
